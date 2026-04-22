@@ -139,6 +139,4 @@ Add movie posters and ratings
 👨‍💻 Author
 
 Developed by Sai Anil Uppu
-👨‍💻 Author
 
-Developed by Sai Anil Uppu
