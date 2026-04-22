@@ -3,6 +3,7 @@
 A Content-Based Movie Recommendation System built using Python, Pandas, and Scikit-learn. This system suggests movies similar to a given movie based on features like genres, keywords, tagline, cast, and director.
 
 📌 Features
+
 Recommends movies based on content similarity
 Uses TF-IDF Vectorization for text processing
 Applies Cosine Similarity to find similar movies
@@ -11,6 +12,7 @@ Supports approximate movie name matching using difflib
 
 
 🛠️ Tech Stack
+
 Python 🐍
 NumPy
 Pandas
@@ -22,6 +24,7 @@ Scikit-learn
 
 
 ⚙️ How It Works
+
 Load dataset (movies.csv)
 Select important features:
 genres
@@ -36,6 +39,7 @@ Recommend top similar movies
 
 
 🚀 Installation
+
 Clone the repository:
 git clone https://github.com/SaiAnil07/movie-recommender.git
 cd movie-recommender
@@ -44,6 +48,7 @@ pip install numpy pandas scikit-learn
 
 
 ▶️ Usage
+
 recommend_movies("Avatar")
 Example Output:
 ['Avatar: The Way of Water', 'Guardians of the Galaxy', 'Interstellar', ...]
@@ -55,6 +60,7 @@ top_n: Number of recommendations (default = 10)
 Returns a list of recommended movie titles.
 
 📊 Dataset
+
 Make sure your dataset (movies.csv) contains the following columns:
 title
 genres
@@ -65,6 +71,7 @@ director
 
 
 ⚠️ Notes
+
 Ensure movies.csv is in the same directory as the script
 Movie names should be close to the actual titles for better matching
 Uses approximate matching, so small typos are handled
