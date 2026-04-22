@@ -26,10 +26,15 @@ A Content-Based Movie Recommendation System built using Python, Pandas, and Scik
 ## 📂 Project Structure
 
 movie-recommender/
+
 │
+
 ├── movies.csv # Dataset file
+
 ├── recommender.py # Main Python script
+
 ├── README.md # Project documentation
+
 
 ---
 
@@ -54,6 +59,7 @@ movie-recommender/
 1. Clone the repository:
 
 git clone  https://github.com/SaiAnil07/Movie-Recommendation-System.git
+
 cd movie-recommender
 
 2. Install dependencies:
@@ -64,7 +70,7 @@ pip install numpy pandas scikit-learn
 
 ## ▶️ Usage
 
-```python
+
 recommend_movies("Avatar")
 
 Example Output:
@@ -89,11 +95,13 @@ cast
 director
 
 ⚠️ Notes
+
 Ensure movies.csv is in the same directory as the script
 Movie names should be close to actual titles for better matching
 Uses approximate matching, so small typos are handled
 
 🔮 Future Improvements
+
 Add a web interface (Flask/React)
 Use deep learning embeddings (BERT)
 Include user-based recommendations
