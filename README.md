@@ -36,6 +36,11 @@ movie-recommender/
 ├── README.md # Project documentation
 
 
+│
+├── movies.csv # Dataset file
+├── recommender.py # Main Python script
+├── README.md # Project documentation
+
 ---
 
 ## ⚙️ How It Works
@@ -71,12 +76,13 @@ pip install numpy pandas scikit-learn
 ## ▶️ Usage
 
 '''Python
+```python
 recommend_movies("Avatar")
 
 Example Output:
 ['Avatar: The Way of Water', 'Guardians of the Galaxy', 'Interstellar']
 
----
+-
 
 🧠 Function Description
 
@@ -88,7 +94,7 @@ top_n: Number of recommendations (default = 10)
 
 Returns a list of recommended movie titles.
 
----
+-
 
 📊 Dataset
 
@@ -106,7 +112,7 @@ cast
 
 director
 
----
+-
 
 ⚠️ Notes
 
@@ -116,7 +122,7 @@ Movie names should be close to actual titles for better matching
 
 Uses approximate matching, so small typos are handled
 
----
+-
 
 🔮 Future Improvements
 
@@ -128,8 +134,11 @@ Include user-based recommendations
 
 Add movie posters and ratings
 
----
+-
 
+👨‍💻 Author
+
+Developed by Sai Anil Uppu
 👨‍💻 Author
 
 Developed by Sai Anil Uppu

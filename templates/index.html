@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Recommender | Minimal Dark</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- "Mint Noir" Color Palette --- */
+    :root {
+      --background: #121212;
+      --surface: #1E1E1E;
+      --accent-teal: #4DB6AC; /* Muted Teal Accent */
+      --text-primary: #EAEAEA;
+      --text-secondary: #A0A0A0;
+      --border-color: #2D2D2D;
+      --error-color: #E57373;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow: hidden;
+
+      /* --- NEW: Minimal Projector Beam Background --- */
+      background-color: var(--background);
+      background-image: radial-gradient(ellipse at 80% 0%, rgba(150, 150, 150, 0.08) 0%, var(--background) 60%);
+      background-attachment: fixed;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 550px;
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--surface);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(10px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text-primary);
+    }
+    
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    #movieInput {
+      flex-grow: 1;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--background);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s ease;
+    }
+
+    #movieInput::placeholder { color: var(--text-secondary); }
+    #movieInput:focus {
+      outline: none;
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 0 3px rgba(77, 182, 172, 0.2);
+    }
+
+    button {
+      padding: 12px;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .icon {
+        width: 20px;
+        height: 20px;
+        stroke: var(--text-secondary);
+        transition: all 0.2s ease;
+    }
+    button:hover {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+    }
+    button:hover .icon {
+        stroke: var(--surface);
+    }
+    
+    #result {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    #result::-webkit-scrollbar { width: 5px; }
+    #result::-webkit-scrollbar-track { background: transparent; }
+    #result::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      padding: 15px;
+      border-radius: 6px;
+      opacity: 0;
+      animation: slideUp 0.4s ease-out forwards;
+      transition: background 0.2s ease;
+      color: var(--text-secondary);
+    }
+    .result-item .result-icon { stroke: var(--text-secondary); }
+    .result-item:hover {
+      background: var(--background);
+      color: var(--text-primary);
+    }
+    .result-item:hover .result-icon {
+        stroke: var(--accent-teal);
+    }
+
+    @keyframes slideUp {
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .error-message {
+      color: var(--error-color); 
+    }
+    .error-message .error-icon {
+        stroke: var(--error-color);
+    }
+
+    .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .loader .spinner-icon {
+        animation: spin 1s linear infinite;
+        stroke: var(--accent-teal);
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Movie Recommender</h1>
+    
+    <div class="search-box">
+      <input type="text" id="movieInput" placeholder="Enter a movie name...">
+      <button onclick="getRecommendations()" title="Search">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+    </div>
+    
+    <ul id="result"></ul>
+  </div>
+
+  <script>
+    // --- SVG Icons ---
+    const ICONS = {
+      loader: `<svg class="icon spinner-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>`,
+      film: `<svg class="icon result-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`,
+      alert: `<svg class="icon error-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+    };
+
+    async function getRecommendations() {
+      const movie = document.getElementById("movieInput").value.trim();
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = `<div class="loader">${ICONS.loader}</div>`;
+
+      if (!movie) {
+        resultBox.innerHTML = createResultItem("Please enter a movie name.", "error-message");
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://127.0.0.1:5000/recommend?movie=${encodeURIComponent(movie)}`);
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+        const data = await res.json();
+        
+        if (data.recommendations && data.recommendations.length > 0) {
+          resultBox.innerHTML = data.recommendations
+            .map((m, index) => createResultItem(m, null, index))
+            .join("");
+        } else {
+          resultBox.innerHTML = createResultItem("No recommendations found.", "error-message");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        resultBox.innerHTML = createResultItem("Error connecting to the server.", "error-message");
+      }
+    }
+
+    function createResultItem(content, customClass = '', index = 0) {
+        const animationDelay = `style="animation-delay: ${index * 0.05}s; transform: translateY(10px);"`;
+        const itemClass = `result-item ${customClass || ''}`.trim();
+        const icon = customClass && customClass.includes('error-message') ? ICONS.alert : ICONS.film;
+        
+        return `<li class="${itemClass}" ${animationDelay}>${icon}<span>${content}</span></li>`;
+    }
+
+    document.getElementById("movieInput").addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            getRecommendations();
+        }
+    });
+  </script>
+</body>
+</html>
