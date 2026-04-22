@@ -77,8 +77,11 @@ Example Output:
 ['Avatar: The Way of Water', 'Guardians of the Galaxy', 'Interstellar']
 
 🧠 Function Description
+
 recommend_movies(movie_name, top_n=10)
+
 movie_name: Input movie title
+
 top_n: Number of recommendations (default = 10)
 
 Returns a list of recommended movie titles.
@@ -88,23 +91,33 @@ Returns a list of recommended movie titles.
 Make sure your dataset (movies.csv) contains the following columns:
 
 title
+
 genres
+
 keywords
+
 tagline
+
 cast
+
 director
 
 ⚠️ Notes
 
 Ensure movies.csv is in the same directory as the script
+
 Movie names should be close to actual titles for better matching
+
 Uses approximate matching, so small typos are handled
 
 🔮 Future Improvements
 
 Add a web interface (Flask/React)
+
 Use deep learning embeddings (BERT)
+
 Include user-based recommendations
+
 Add movie posters and ratings
 
 👨‍💻 Author
